@@ -21,7 +21,7 @@ const TextInputSection = () => {
   const [targetLanguage, setTargetLanguage] = useState('Python');
   const [loading, setLoading] = useState(false);
 
-  const charLimit = 3000;
+  const charLimit = 2000;
 
   const languageOptions = Object.keys(languageMap);
 
