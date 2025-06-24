@@ -61,7 +61,7 @@ const FileUploadSection = () => {
         <Box>
         <input
             type="file"
-            accept=".txt,.pdf,.docx,.js,.py,.java,.cpp,.ts,.go,.rb"
+            accept=".txt,.pdf,.docx,.js,.py,.java,.cpp,.ts,.go,.rb,.cs,.rs"
             onChange={(e) => setFile(e.target.files[0])}
             style={{ marginTop: '1rem' }}
         />
