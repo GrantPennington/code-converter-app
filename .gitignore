@@ -11,3 +11,6 @@ client/.env.production
 # Server
 backend/node_modules
 backend/.env
+
+init-backend.js
+notes.txt
