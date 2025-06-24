@@ -8,7 +8,7 @@ A full-stack web application that allows users to convert code snippets from one
 
 - 🔄 Convert code from one language to another using OpenAI
 - 📋 Paste code manually or upload `.txt`, `.pdf`, or `.docx` files
-- 🧠 Auto-detect or specify source language
+- 🧠 Specify source language
 - 💾 Save conversion history locally per session
 - 💡 Syntax highlighting for original and converted code
 - 📎 Copy-to-clipboard support for each code block
