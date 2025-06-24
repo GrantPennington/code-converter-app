@@ -1,0 +1,4 @@
+NEXT STEPS:
+Add some sort of limiter by sessionId so that I dont get charged my full credits on the openai API, prevent users from spamming it.
+Add nice UI using a component library like MUI or ChakraUI.
+For real purposes, create a full AUTH and login system. Right now it is session based for an MVP 
