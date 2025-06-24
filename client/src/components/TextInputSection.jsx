@@ -10,60 +10,70 @@ import {
   Box,
   Typography
 } from '@mui/material';
-import { saveHistory, summarizeText } from '../services/api';
-import SummaryResult from './SummaryResult';
+import { saveHistory, convertCode } from '../services/api';
+import ConversionResult from './ConversionResult';
 
-const summaryStyles = [
-  { label: 'Balanced', value: 'default' },
-  { label: 'Bullet Points', value: 'bullet' },
-  { label: 'TL;DR', value: 'tldr' },
-  { label: 'Outline', value: 'outline' },
-  { label: 'Study Guide', value: 'study-guide' },
-  { label: 'Action Items', value: 'action-items' },
-  { label: 'Highlighted Quotes', value: 'highlighted-quotes' },
-  { label: 'Rewrite for a 10-Year-Old', value: 'rewrite-simplified' },
-  { label: 'Quiz Generator', value: 'question-generator' },
+const languageOptions = [
+  'JavaScript',
+  'Python',
+  'TypeScript',
+  'C++',
+  'Java',
+  'Go',
+  'Ruby',
+  'Rust',
+  'C#',
 ];
 
 const TextInputSection = () => {
-    const [text, setText] = useState('');
-    const [summary, setSummary] = useState('');
-    const [style, setStyle] = useState('default');
-    const [loading, setLoading] = useState(false);
+  const [originalCode, setOriginalCode] = useState('');
+  const [convertedCode, setConvertedCode] = useState('');
+  const [sourceLanguage, setSourceLanguage] = useState('JavaScript');
+  const [targetLanguage, setTargetLanguage] = useState('Python');
+  const [loading, setLoading] = useState(false);
 
-    const charLimit = 2000;
-  
-    const handleSummarize = async () => {
-        setLoading(true);
-        try {
-            const result = await summarizeText(text, style);
-            setSummary(result);
-              
-            const sessionId = localStorage.getItem('sessionId');
-            const wordCount = text.trim().split(/\s+/).length;
-  
-            await saveHistory(sessionId, text, result, style, {
-                filename: 'N/A',
-                filetype: 'manual-input',
-                wordCount,
-            });
-              
-        } catch (err) {
-            console.error('Summarization failed:', err);
-            setSummary('Error summarizing text.');
-        }
-        setLoading(false);
-    };
+  const charLimit = 3000;
 
-    return (
-        <Box>
+  const handleConvert = async () => {
+    setLoading(true);
+    try {
+      const sessionId = localStorage.getItem('sessionId');
+      const wordCount = originalCode.trim().split(/\s+/).length;
+
+      const result = await convertCode(
+        originalCode,
+        sourceLanguage,
+        targetLanguage,
+        sessionId
+      );
+
+      setConvertedCode(result);
+
+    //   await saveHistory(sessionId, originalCode, result, null, {
+    //     filename: 'N/A',
+    //     filetype: 'manual-input',
+    //     wordCount,
+    //     sourceLanguage,
+    //     targetLanguage,
+    //     textSource: 'manual',
+    //   });
+
+    } catch (err) {
+      console.error('Code conversion failed:', err);
+      setConvertedCode('Error converting code.');
+    }
+    setLoading(false);
+  };
+
+  return (
+    <Box>
         <TextField
             fullWidth
             multiline
             minRows={6}
-            label="Paste your text here..."
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            label="Paste your code here..."
+            value={originalCode}
+            onChange={(e) => setOriginalCode(e.target.value)}
             slotProps={{ 
                 input: {
                     maxLength: charLimit,
@@ -72,19 +82,35 @@ const TextInputSection = () => {
         />
         <Typography
             variant="caption"
-            color={text.length > charLimit ? 'error' : 'text.secondary'}
+            color={originalCode.length > charLimit ? 'error' : 'text.secondary'}
             sx={{ display: 'block', mt: 1, textAlign: 'right' }}
         >
-            Character count: {text.length} / {charLimit}
+            Character count: {originalCode.length} / {charLimit}
         </Typography>
 
         <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel>Summary Style</InputLabel>
-            <Select value={style} onChange={(e) => setStyle(e.target.value)} label="Summary Style">
-            {summaryStyles.map((s) => (
-                <MenuItem key={s.value} value={s.value}>
-                    {s.label}
-                </MenuItem>
+            <InputLabel>Source Language (optional)</InputLabel>
+            <Select
+                value={sourceLanguage}
+                onChange={(e) => setSourceLanguage(e.target.value)}
+                label="Source Language (optional)"
+            >
+            {/* <MenuItem value="">Auto-detect</MenuItem> */}
+            {languageOptions.map((lang) => (
+                <MenuItem key={lang} value={lang}>{lang}</MenuItem>
+            ))}
+            </Select>
+        </FormControl>
+
+        <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Target Language</InputLabel>
+            <Select
+                value={targetLanguage}
+                onChange={(e) => setTargetLanguage(e.target.value)}
+                label="Target Language"
+            >
+            {languageOptions.map((lang) => (
+                <MenuItem key={lang} value={lang}>{lang}</MenuItem>
             ))}
             </Select>
         </FormControl>
@@ -92,15 +118,15 @@ const TextInputSection = () => {
         <Button
             variant="contained"
             sx={{ mt: 2, mb: 6 }}
-            onClick={handleSummarize}
-            disabled={loading || !text || text.length > charLimit}
+            onClick={handleConvert}
+            disabled={loading || !originalCode || originalCode.length > charLimit}
         >
-            {loading ? <CircularProgress size={24} /> : 'Summarize'}
+            {loading ? <CircularProgress size={24} /> : 'Convert'}
         </Button>
 
-        <SummaryResult summary={summary} style={style} />
-        </Box>
-    );
+        <ConversionResult conversion={convertedCode} />
+    </Box>
+  );
 };
 
 export default TextInputSection;

@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const connectDB = require('./config/db');
-const summarizeRoutes = require('./routes/summarizeRoutes');
+const codeConversionRoutes = require('./routes/codeConversionRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const historyRoutes = require('./routes/historyRoutes');
 
@@ -36,7 +36,7 @@ app.get('/api/ping', async (req, res) => {
 });
 
 // Routes
-app.use('/api/summarize', summarizeRoutes);
+app.use('/api/convert', codeConversionRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/history', historyRoutes);
 

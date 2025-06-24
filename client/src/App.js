@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import SummarizerPage from './pages/SummarizerPage';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from './Routes';
 import MainLayout from './layout/MainLayout';

@@ -14,7 +14,7 @@ const MainLayout = ({ children }) => {
             to="/" 
             sx={{ color: 'inherit', textDecoration: 'none' }}
         >
-            📝 Smart Note Summarizer
+            📝 Code Converter
         </Typography>
         </Toolbar>
       </AppBar>

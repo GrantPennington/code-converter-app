@@ -1,54 +1,76 @@
 import React, { useState } from 'react';
-import { Button, CircularProgress, Typography, Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import axios from 'axios';
 import { saveHistory } from '../services/api';
-import SummaryResult from './SummaryResult';
+import ConversionResult from './ConversionResult';
 
-const summaryStyles = [
-  { label: 'Balanced', value: 'default' },
-  { label: 'Bullet Points', value: 'bullet' },
-  { label: 'TL;DR', value: 'tldr' },
-  { label: 'Outline', value: 'outline' },
-  { label: 'Study Guide', value: 'study-guide' },
-  { label: 'Action Items', value: 'action-items' },
-  { label: 'Highlighted Quotes', value: 'highlighted-quotes' },
-  { label: 'Rewrite for a 10-Year-Old', value: 'rewrite-simplified' },
-  { label: 'Quiz Generator', value: 'question-generator' },
+const languageOptions = [
+  'JavaScript',
+  'Python',
+  'TypeScript',
+  'C++',
+  'Java',
+  'Go',
+  'Ruby',
+  'Rust',
+  'C#',
 ];
 
 const FileUploadSection = () => {
     const [file, setFile] = useState(null);
-    const [summary, setSummary] = useState('');
+    const [convertedCode, setConvertedCode] = useState('');
     const [loading, setLoading] = useState(false);
-    const [style, setStyle] = useState('default');
+    const [sourceLanguage, setSourceLanguage] = useState('JavaScript');
+    const [targetLanguage, setTargetLanguage] = useState('Python');
 
     const handleFileUpload = async () => {
         if (!file) return;
 
+        const sessionId = localStorage.getItem('sessionId');
         const formData = new FormData();
+
         formData.append('file', file);
-        formData.append('style', style);
+        formData.append('sessionId', sessionId);
+        formData.append('sourceLanguage', sourceLanguage);
+        formData.append('targetLanguage', targetLanguage);
 
         setLoading(true);
+
         try {
-            const sessionId = localStorage.getItem('sessionId');
-                // upload route
-            const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/upload`, formData);
-                // save summary from response
-            const { summary, text, filename, filetype, wordCount } = res.data;
+        const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/upload`, formData);
 
-            setSummary(summary);
+        const {
+            convertedCode,
+            originalCode,
+            filename,
+            filetype,
+            wordCount,
+        } = res.data;
 
-            await saveHistory(sessionId, text, summary, style, {
-                filename,
-                filetype,
-                wordCount
-            });
+        setConvertedCode(convertedCode);
 
+        await saveHistory(sessionId, originalCode, convertedCode, null, {
+            filename,
+            filetype,
+            wordCount,
+            sourceLanguage,
+            targetLanguage,
+            textSource: 'file',
+        });
         } catch (err) {
             console.error('Upload failed:', err);
-            setSummary('Error summarizing uploaded file.');
+            setConvertedCode('Error converting uploaded code.');
         }
+
         setLoading(false);
     };
 
@@ -56,17 +78,37 @@ const FileUploadSection = () => {
         <Box>
         <input
             type="file"
-            accept=".txt,.pdf,.docx"
+            accept=".txt,.pdf,.docx,.js,.py,.java,.cpp,.ts,.go,.rb"
             onChange={(e) => setFile(e.target.files[0])}
             style={{ marginTop: '1rem' }}
         />
 
         <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel>Summary Style</InputLabel>
-            <Select value={style} onChange={(e) => setStyle(e.target.value)} label="Summary Style">
-            {summaryStyles.map((s) => (
-                <MenuItem key={s.value} value={s.value}>
-                {s.label}
+            <InputLabel>Source Language (optional)</InputLabel>
+            <Select
+                value={sourceLanguage}
+                onChange={(e) => setSourceLanguage(e.target.value)}
+                label="Source Language"
+            >
+            {/* <MenuItem value="">Auto-detect</MenuItem> */}
+            {languageOptions.map((lang) => (
+                <MenuItem key={lang} value={lang}>
+                {lang}
+                </MenuItem>
+            ))}
+            </Select>
+        </FormControl>
+
+        <FormControl fullWidth sx={{ mt: 2 }}>
+            <InputLabel>Target Language</InputLabel>
+            <Select
+            value={targetLanguage}
+            onChange={(e) => setTargetLanguage(e.target.value)}
+            label="Target Language"
+            >
+            {languageOptions.map((lang) => (
+                <MenuItem key={lang} value={lang}>
+                {lang}
                 </MenuItem>
             ))}
             </Select>
@@ -78,11 +120,12 @@ const FileUploadSection = () => {
             onClick={handleFileUpload}
             disabled={loading || !file}
         >
-            {loading ? <CircularProgress size={24} /> : 'Upload & Summarize'}
+            {loading ? <CircularProgress size={24} /> : 'Upload & Convert'}
         </Button>
-        <SummaryResult summary={summary} style={style} />
-        </Box>
-    );
+
+        <ConversionResult conversion={convertedCode} />
+    </Box>
+  );
 };
 
 export default FileUploadSection;
