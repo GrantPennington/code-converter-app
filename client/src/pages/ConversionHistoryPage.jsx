@@ -120,8 +120,8 @@ const ConversionHistoryPage = () => {
 
                     <SyntaxHighlighter
                       language={original.language}
-                      style={coy}
-                      customStyle={{ borderRadius: 8, fontSize: '0.9rem', fontFamily: 'Fira Code, monospace' }}
+                      style={vscDarkPlus}
+                      customStyle={{ borderRadius: 8, padding: 12, fontSize: '0.9rem', fontFamily: 'Fira Code, monospace' }}
                       PreTag={"pre"}
                       codeTagProps={{
                         style: { fontFamily: 'Fira Code, monospace' }
@@ -143,8 +143,8 @@ const ConversionHistoryPage = () => {
 
                     <SyntaxHighlighter
                       language={converted.language}
-                      style={coy}
-                      customStyle={{ borderRadius: 8, fontSize: '0.9rem' }}
+                      style={vscDarkPlus}
+                      customStyle={{ borderRadius: 8, padding: 12, fontSize: '0.9rem' }}
                       PreTag={"pre"}
                       codeTagProps={{
                         style: { fontFamily: 'Fira Code, monospace' }

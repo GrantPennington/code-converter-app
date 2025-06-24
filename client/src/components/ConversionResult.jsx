@@ -1,6 +1,6 @@
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { coy, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Card, CardContent, Typography, Box, IconButton, Tooltip, Divider } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
@@ -24,10 +24,10 @@ const ConversionResult = ({ conversion }) => {
 
   return (
     <Box sx={{ mt: 4, mb: 10, position: 'relative' }}>
-      <Card>
+      <Card sx={{ backgroundColor: 'background.paper', p:2, mb:2 }}>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom color="text.secondary">
               🧠 Converted Code
             </Typography>
             <Tooltip title="Copy to clipboard">
@@ -39,13 +39,11 @@ const ConversionResult = ({ conversion }) => {
           <Divider />
           <SyntaxHighlighter
             language={language}
-            style={coy}
-            customStyle={{
-              padding: '1rem',
-              borderRadius: '8px',
-              backgroundColor: '#f6f8fa',
-              fontSize: '0.9rem',
-              fontFamily: 'Fira Code, monospace',
+            style={vscDarkPlus}
+            customStyle={{ borderRadius: 8, padding: 12, fontSize: '0.9rem', fontFamily: 'Fira Code, monospace', backgroundColor: '#1e1e1e', }}
+            PreTag={"pre"}
+            codeTagProps={{
+              style: { fontFamily: 'Fira Code, monospace' }
             }}
           >
             {code}
