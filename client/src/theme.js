@@ -8,7 +8,7 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontFamily: `'Figtree', sans-serif`,
+        fontFamily: `'Inter', sans-serif`,
     },
 });
 

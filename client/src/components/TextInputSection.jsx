@@ -26,7 +26,7 @@ const languageOptions = [
 ];
 
 const TextInputSection = () => {
-  const [originalCode, setOriginalCode] = useState('');
+  const [originalCode, setOriginalCode] = useState('console.log("Hello, World!");');
   const [convertedCode, setConvertedCode] = useState('');
   const [sourceLanguage, setSourceLanguage] = useState('JavaScript');
   const [targetLanguage, setTargetLanguage] = useState('Python');
@@ -49,15 +49,6 @@ const TextInputSection = () => {
 
       setConvertedCode(result);
 
-    //   await saveHistory(sessionId, originalCode, result, null, {
-    //     filename: 'N/A',
-    //     filetype: 'manual-input',
-    //     wordCount,
-    //     sourceLanguage,
-    //     targetLanguage,
-    //     textSource: 'manual',
-    //   });
-
     } catch (err) {
       console.error('Code conversion failed:', err);
       setConvertedCode('Error converting code.');
@@ -77,6 +68,7 @@ const TextInputSection = () => {
             slotProps={{ 
                 input: {
                     maxLength: charLimit,
+                    sx: { fontFamily: 'Fira Code, monospace', fontSize: '0.9rem' }
                 }
             }}
         />
@@ -95,7 +87,6 @@ const TextInputSection = () => {
                 onChange={(e) => setSourceLanguage(e.target.value)}
                 label="Source Language (optional)"
             >
-            {/* <MenuItem value="">Auto-detect</MenuItem> */}
             {languageOptions.map((lang) => (
                 <MenuItem key={lang} value={lang}>{lang}</MenuItem>
             ))}

@@ -45,6 +45,7 @@ const ConversionResult = ({ conversion }) => {
               borderRadius: '8px',
               backgroundColor: '#f6f8fa',
               fontSize: '0.9rem',
+              fontFamily: 'Fira Code, monospace',
             }}
           >
             {code}
