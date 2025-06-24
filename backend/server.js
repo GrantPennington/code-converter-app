@@ -16,7 +16,7 @@ const app = express();
 
 app.use(cors({
     origin: ['https://code-converter-app-zeta.vercel.app', 'http://localhost:3000'],
-    methods: ['GET', 'POST', ,'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
 }));
 
 // Allow OPTIONS preflight requests
