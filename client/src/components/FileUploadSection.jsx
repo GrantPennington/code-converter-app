@@ -14,18 +14,6 @@ import { saveHistory } from '../services/api';
 import ConversionResult from './ConversionResult';
 import { LANGUAGE_MAP as languageMap } from '../data/languageMap';
 
-// const languageOptions = {
-//   'JavaScript': 'javascript',
-//   'Python': 'python',
-//   'TypeScript': 'typescript',
-//   'C++': 'cpp',
-//   'Java': 'java',
-//   'Go': 'go',
-//   'Ruby': 'ruby',
-//   'Rust': 'rust',
-//   'C#': 'csharp',
-// };
-
 const FileUploadSection = () => {
     const [file, setFile] = useState(null);
     const [convertedCode, setConvertedCode] = useState('');
@@ -93,7 +81,6 @@ const FileUploadSection = () => {
                 onChange={(e) => setSourceLanguage(e.target.value)}
                 label="Source Language"
             >
-            {/* <MenuItem value="">Auto-detect</MenuItem> */}
             {languageOptions.map((lang) => (
                 <MenuItem key={lang} value={lang}>{lang}</MenuItem>
             ))}

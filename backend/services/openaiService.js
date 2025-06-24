@@ -1,10 +1,5 @@
-// services/codeConversionService.js
 const { OpenAI } = require('openai');
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-// const buildConversionPrompt = (originalCode, sourceLanguage, targetLanguage) => {
-//   return `Convert the following ${sourceLanguage} code into ${targetLanguage}:\n\n${originalCode}`;
-// };
 
 const buildConversionPrompt = (code, src, target) => `
 Convert the following ${src} code to ${target}.

@@ -14,18 +14,6 @@ import { convertCode } from '../services/api';
 import ConversionResult from './ConversionResult';
 import { LANGUAGE_MAP as languageMap } from '../data/languageMap';
 
-// const languageMap = {
-//   'JavaScript': 'javascript',
-//   'Python': 'python',
-//   'TypeScript': 'typescript',
-//   'C++': 'cpp',
-//   'Java': 'java',
-//   'Go': 'go',
-//   'Ruby': 'ruby',
-//   'Rust': 'rust',
-//   'C#': 'csharp',
-// };
-
 const TextInputSection = () => {
   const [originalCode, setOriginalCode] = useState('console.log("Hello, World!");');
   const [convertedCode, setConvertedCode] = useState('');
