@@ -10,20 +10,21 @@ import {
   Box,
   Typography
 } from '@mui/material';
-import { saveHistory, convertCode } from '../services/api';
+import { convertCode } from '../services/api';
 import ConversionResult from './ConversionResult';
+import { LANGUAGE_MAP as languageMap } from '../data/languageMap';
 
-const languageOptions = [
-  'JavaScript',
-  'Python',
-  'TypeScript',
-  'C++',
-  'Java',
-  'Go',
-  'Ruby',
-  'Rust',
-  'C#',
-];
+// const languageMap = {
+//   'JavaScript': 'javascript',
+//   'Python': 'python',
+//   'TypeScript': 'typescript',
+//   'C++': 'cpp',
+//   'Java': 'java',
+//   'Go': 'go',
+//   'Ruby': 'ruby',
+//   'Rust': 'rust',
+//   'C#': 'csharp',
+// };
 
 const TextInputSection = () => {
   const [originalCode, setOriginalCode] = useState('console.log("Hello, World!");');
@@ -34,6 +35,8 @@ const TextInputSection = () => {
 
   const charLimit = 3000;
 
+  const languageOptions = Object.keys(languageMap);
+
   const handleConvert = async () => {
     setLoading(true);
     try {
@@ -42,8 +45,8 @@ const TextInputSection = () => {
 
       const result = await convertCode(
         originalCode,
-        sourceLanguage,
-        targetLanguage,
+        languageMap[sourceLanguage],
+        languageMap[targetLanguage],
         sessionId
       );
 

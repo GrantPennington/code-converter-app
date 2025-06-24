@@ -15,8 +15,8 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: ['https://smart-summarizer-five.vercel.app', 'http://localhost:3000'],
-    methods: ['GET', 'POST', 'OPTIONS'],
+    origin: ['http://localhost:3000'], // 'https://smart-summarizer-five.vercel.app', 
+    methods: ['GET', 'POST', ,'DELETE', 'OPTIONS'],
 }));
 
 // Allow OPTIONS preflight requests

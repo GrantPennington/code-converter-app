@@ -12,18 +12,19 @@ import {
 import axios from 'axios';
 import { saveHistory } from '../services/api';
 import ConversionResult from './ConversionResult';
+import { LANGUAGE_MAP as languageMap } from '../data/languageMap';
 
-const languageOptions = [
-  'JavaScript',
-  'Python',
-  'TypeScript',
-  'C++',
-  'Java',
-  'Go',
-  'Ruby',
-  'Rust',
-  'C#',
-];
+// const languageOptions = {
+//   'JavaScript': 'javascript',
+//   'Python': 'python',
+//   'TypeScript': 'typescript',
+//   'C++': 'cpp',
+//   'Java': 'java',
+//   'Go': 'go',
+//   'Ruby': 'ruby',
+//   'Rust': 'rust',
+//   'C#': 'csharp',
+// };
 
 const FileUploadSection = () => {
     const [file, setFile] = useState(null);
@@ -31,6 +32,8 @@ const FileUploadSection = () => {
     const [loading, setLoading] = useState(false);
     const [sourceLanguage, setSourceLanguage] = useState('JavaScript');
     const [targetLanguage, setTargetLanguage] = useState('Python');
+
+    const languageOptions = Object.keys(languageMap);
 
     const handleFileUpload = async () => {
         if (!file) return;
@@ -40,8 +43,8 @@ const FileUploadSection = () => {
 
         formData.append('file', file);
         formData.append('sessionId', sessionId);
-        formData.append('sourceLanguage', sourceLanguage);
-        formData.append('targetLanguage', targetLanguage);
+        formData.append('sourceLanguage', languageMap[sourceLanguage]);
+        formData.append('targetLanguage', languageMap[targetLanguage]);
 
         setLoading(true);
 
@@ -62,8 +65,8 @@ const FileUploadSection = () => {
             filename,
             filetype,
             wordCount,
-            sourceLanguage,
-            targetLanguage,
+            sourceLanguage: languageMap[sourceLanguage],
+            targetLanguage: languageMap[targetLanguage],
             textSource: 'file',
         });
         } catch (err) {
@@ -92,9 +95,7 @@ const FileUploadSection = () => {
             >
             {/* <MenuItem value="">Auto-detect</MenuItem> */}
             {languageOptions.map((lang) => (
-                <MenuItem key={lang} value={lang}>
-                {lang}
-                </MenuItem>
+                <MenuItem key={lang} value={lang}>{lang}</MenuItem>
             ))}
             </Select>
         </FormControl>

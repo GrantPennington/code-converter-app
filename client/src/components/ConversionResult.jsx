@@ -1,7 +1,7 @@
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Card, CardContent, Typography, Box, IconButton, Tooltip } from '@mui/material';
+import { Card, CardContent, Typography, Box, IconButton, Tooltip, Divider } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const ConversionResult = ({ conversion }) => {
@@ -23,7 +23,7 @@ const ConversionResult = ({ conversion }) => {
   };
 
   return (
-    <Box sx={{ mt: 4, mb: 6, position: 'relative' }}>
+    <Box sx={{ mt: 4, mb: 10, position: 'relative' }}>
       <Card>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -36,7 +36,7 @@ const ConversionResult = ({ conversion }) => {
               </IconButton>
             </Tooltip>
           </Box>
-
+          <Divider />
           <SyntaxHighlighter
             language={language}
             style={coy}

@@ -14,9 +14,10 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { coy } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { coy, vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { getHistory, deleteHistory } from '../services/api';
 import FloatingButton from '../components/FloatingButton';
+import { LANGUAGE_MAP as languageMap } from '../data/languageMap';
 
 const extractCode = (input, fallbackLang = 'text') => {
   const match = input.match(/```(\w+)?\n([\s\S]*?)```/);
@@ -33,6 +34,10 @@ const copyToClipboard = (text) => {
 const ConversionHistoryPage = () => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const getKeyFromValue = (value) => {
+    return Object.keys(languageMap).find(k => languageMap[k] === value);
+  }
 
   const fetchHistory = async () => {
     const sessionId = localStorage.getItem('sessionId');
@@ -88,7 +93,7 @@ const ConversionHistoryPage = () => {
                 <Card>
                   <CardContent>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                      <Chip label={`${entry.sourceLanguage} → ${entry.targetLanguage}`} color="primary" size="small" />
+                      <Chip label={`${getKeyFromValue(entry.sourceLanguage)} → ${getKeyFromValue(entry.targetLanguage)}`} color="primary" size="small" />
                       <Tooltip title="Delete conversion">
                         <IconButton size="small" onClick={() => handleDelete(entry._id)}>
                           <DeleteIcon fontSize="small" />
