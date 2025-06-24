@@ -48,15 +48,7 @@ const FileUploadSection = () => {
         } = res.data;
 
         setConvertedCode(convertedCode);
-
-        await saveHistory(sessionId, originalCode, convertedCode, null, {
-            filename,
-            filetype,
-            wordCount,
-            sourceLanguage: languageMap[sourceLanguage],
-            targetLanguage: languageMap[targetLanguage],
-            textSource: 'file',
-        });
+        
         } catch (err) {
             console.error('Upload failed:', err);
             setConvertedCode('Error converting uploaded code.');
