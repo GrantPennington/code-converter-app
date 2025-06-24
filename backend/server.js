@@ -15,7 +15,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000'], // 'https://smart-summarizer-five.vercel.app', 
+    origin: ['https://code-converter-app-zeta.vercel.app/', 'http://localhost:3000'], // 'https://smart-summarizer-five.vercel.app', 
     methods: ['GET', 'POST', ,'DELETE', 'OPTIONS'],
 }));
 
