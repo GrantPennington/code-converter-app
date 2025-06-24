@@ -1,19 +1,36 @@
-# 📝 Smart Note Summarizer
+# 🧠 Code Converter App
 
-A full stack MERN application using the ChatGPT API to summarize notes into clear and concise content.
+A full-stack web application that allows users to convert code snippets from one programming language to another using the OpenAI API. Built with the MERN stack and designed for ease of use, file upload support, session-based history, and syntax-highlighted results.
 
-Live Demo Link: https://smart-summarizer-five.vercel.app/
+---
 
-## Features
-- 🧠 Summarizes long-form text via GPT
-- 🧾 Paste or upload notes
-- 💾 Save summary history (MongoDB support)
-- 🚀 Built with React, Node.js, Express, OpenAI
+## ✨ Features
 
-## Getting Started
+- 🔄 Convert code from one language to another using OpenAI
+- 📋 Paste code manually or upload `.txt`, `.pdf`, or `.docx` files
+- 🧠 Auto-detect or specify source language
+- 💾 Save conversion history locally per session
+- 💡 Syntax highlighting for original and converted code
+- 📎 Copy-to-clipboard support for each code block
 
-### Backend
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React + Material UI
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB with Mongoose
+- **AI**: OpenAI GPT API
+- **Deployment**:
+  - Frontend: Vercel
+  - Backend: Render
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
 ```bash
-cd backend
-npm install
-node server.js
+git clone https://github.com/your-username/code-converter-app.git
+cd code-converter-app
